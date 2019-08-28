@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @vote_poll.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @vote_poll.description %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %>
+</p>
+
+<p>
+  <strong>Enddate:</strong>
+  <%= @vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %>
+</p>
+
+<%= link_to 'Edit', edit_admin_vote_poll_path(@vote_poll), class: 'btn btn-primary' %> |
+<%= link_to 'Back', admin_vote_polls_path, class: 'btn btn-info' %>

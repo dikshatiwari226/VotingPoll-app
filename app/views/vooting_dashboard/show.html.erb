@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @vote_poll.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @vote_poll.description %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %>
+</p>
+
+<p>
+  <strong>Enddate:</strong>
+  <%= @vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %>
+</p>
+
+<!-- Voting Answer form  -->
+
+<%# byebug %>
+<% if Answer.all.where(user_id: current_user.id).present? %><br>
+    <span class="card-title"><h4>You have already upvoted !</h4></span>
+<% else %>
+  <% if @vote_option.present? %>
+    <%= form_for :answers, :url => answers_path  do |f| %>
+      <%= f.hidden_field :vote_poll_id, :value => @vote_poll.id %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+          <% @vote_option.each do |option| %>
+            <label class="radio-inline"><input type="radio" name="option_answer"  value= "<%= option.id %>"><%= option.title %></label>
+          <% end %><br><br>
+        <button type="submit">Submit</button>
+    <% end %>
+  <% end %>  
+<% end %> 
+
+
+

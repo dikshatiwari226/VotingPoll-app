@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Vote Polls</h1>
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Startdate</th>
+        <th>Enddate</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @vooting_all.each do |vote_poll| %>
+        <tr>
+          <td><%= vote_poll.title %></td>
+          <td><%= vote_poll.description %></td>
+          <td><%= vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
+          <td><%= vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
+          <!-- <td><%#= vote_poll.%></td> -->
+          <td><%= link_to 'Poll Detail', vooting_dashboard_path(vote_poll), :class=> 'btn btn-primary' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
