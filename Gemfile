@@ -64,7 +64,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'bootstrap-sass'
-# gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails'
 gem "nested_form"
 gem 'momentjs-rails'
-gem 'bootstrap3-datetimepicker-rails'
+# gem 'bootstrap3-datetimepicker-rails'

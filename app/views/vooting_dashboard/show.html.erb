@@ -12,12 +12,13 @@
 
 <p>
   <strong>Startdate:</strong>
-  <%= @vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %>
+  <%= @vote_poll.startdate.strftime "%a, %-d %b %Y " %>
 </p>
 
 <p>
   <strong>Enddate:</strong>
-  <%= @vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %>
+  <%= @vote_poll.enddate.strftime "%a, %-d %b %Y" %>
+  <%#= @vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %>
 </p>
 
 <!-- Voting Answer form  -->

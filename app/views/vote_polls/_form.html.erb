@@ -57,7 +57,7 @@
 <% end %>
 
 
-
+<!-- 
 <script type="text/javascript">
   $(document).ready(function(){
     $('.datetimepicker1').datetimepicker({
@@ -77,13 +77,13 @@
     });
   });
 </script>
-
+ -->
 <!-- Start_Date & End_Date Validation  -->
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   $(document).ready(function(){
-    $(".datepicker").datetimepicker({
-      format: 'dd M yyyy -hh:ii',          // 12 Aug 2019 print date this format
+    $(".datetimepicker1").datepicker({
+      format: 'dd M yyyy',          // 12 Aug 2019 print date this format
       autoclose: true,
       todayHighlight: true,
       orientation: 'auto top',
@@ -102,11 +102,11 @@
       }
     });
   });
-</script> -->
+</script>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".datetimepicker1").datetimepicker('setStartDate', 'Date.Today');
+    $(".datetimepicker1").datepicker('setStartDate', 'Date.Today');
   });
 </script>
 
