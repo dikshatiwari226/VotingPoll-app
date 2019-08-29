@@ -14,18 +14,27 @@
     </thead>
 
     <tbody>
+
       <% @vooting_all.each do |vote_poll| %>
         <tr>
           <td><%= vote_poll.title %></td>
           <td><%= vote_poll.description %></td>
           <td><%= vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
           <td><%= vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
-          <!-- <td><%#= vote_poll.%></td> -->
           <td><%= link_to 'Poll Detail', vooting_dashboard_path(vote_poll), :class=> 'btn btn-primary' %></td>
+          <% if current_user.present? %>
+            <td><%= link_to 'Poll Detail', vooting_dashboard_path(vote_poll), :class=> 'btn btn-primary' %></td>
+          <% else %>
+          <td>
+              <%= link_to "Sign up", new_user_registration_path, :class=> 'btn btn-primary' %> |
+              <%= link_to "Login", new_user_session_path, :class=> 'btn btn-primary' %>&nbsp;  <h4>Please must log in </h4>
+          </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 <br>
+
 

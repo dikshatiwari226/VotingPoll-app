@@ -22,21 +22,26 @@
 
 <!-- Voting Answer form  -->
 
-<%# byebug %>
-<% if Answer.all.where(user_id: current_user.id).present? %><br>
-    <span class="card-title"><h4>You have already upvoted !</h4></span>
-<% else %>
+<%# if Answer.all.where(user_id: current_user.id).present? %><br>
+    <!-- <span class="card-title"><h4>You have already upvoted !</h4></span> -->
+<%# else %>
   <% if @vote_option.present? %>
     <%= form_for :answers, :url => answers_path  do |f| %>
       <%= f.hidden_field :vote_poll_id, :value => @vote_poll.id %>
+      <% if current_user.present? %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
+      <% end %>
           <% @vote_option.each do |option| %>
+
             <label class="radio-inline"><input type="radio" name="option_answer"  value= "<%= option.id %>"><%= option.title %></label>
           <% end %><br><br>
         <button type="submit">Submit</button>
     <% end %>
   <% end %>  
-<% end %> 
+<%# end %> 
 
 
-
+<% @vote_option.each do |op|%> 
+  <% op_count = op.answers.count %> 
+  <%= op.title %>:- <b><%= ((op_count*100)/@vote_option.count.to_f).round(2) %>%</b><br>
+<% end %>

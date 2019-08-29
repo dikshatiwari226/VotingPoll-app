@@ -1,11 +1,11 @@
 class VootingDashboardController < ApplicationController
 	def index
-		@vooting_all = VotePoll.all.where("startdate > ?",  DateTime.now)
+		# @vooting_all = VotePoll.all.where("startdate > ?",  DateTime.now)
 		# today = DateTime.now
 		# @vooting_all = VotePoll.all.where("today >= startdate AND today <= enddate")
 
 
-		# @vooting_all = VotePoll.all.where("startdate <= ? AND enddate >= ?", today, today )
+		@vooting_all = VotePoll.all.where("startdate <= ? AND enddate >= ?", DateTime.now, DateTime.now )
 	end
 
 	
