@@ -1,4 +1,10 @@
 module ApplicationHelper
+
+  def active_class(link_path)
+    current_page?(link_path) ? "active" : ""
+  end
+
+
 	def is_namespace_admin
   begin
    return false if !(request.base_url && request.url)

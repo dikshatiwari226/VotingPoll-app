@@ -18,3 +18,5 @@
 //= require jquery_nested_form
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
+//= require chartkick
+//= require Chart.bundle

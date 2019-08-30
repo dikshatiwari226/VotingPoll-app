@@ -23,26 +23,156 @@
 
 <!-- Voting Answer form  -->
 
-<%# if Answer.all.where(user_id: current_user.id).present? %><br>
-    <!-- <span class="card-title"><h4>You have already upvoted !</h4></span> -->
-<%# else %>
-  <% if @vote_option.present? %>
-    <%= form_for :answers, :url => answers_path  do |f| %>
-      <%= f.hidden_field :vote_poll_id, :value => @vote_poll.id %>
-      <% if current_user.present? %>
-      <%= f.hidden_field :user_id, :value => current_user.id %>
-      <% end %>
+<% if user_signed_in? %>
+  <% if Answer.where(user_id: current_user.id, vote_poll_id: @vote_poll.id).first.present?  %><br>
+    <span class="card-title"><h4>You have already upvoted !</h4></span>
+  <% else %>
+    <% if @vote_option.present? %>
+      <%= form_for :answers, :url => answers_path  do |f| %>
+        <%= f.hidden_field :vote_poll_id, :value => @vote_poll.id %>
+          <% if current_user.present? %>
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+          <% end %>
           <% @vote_option.each do |option| %>
-
             <label class="radio-inline"><input type="radio" name="option_answer"  value= "<%= option.id %>"><%= option.title %></label>
           <% end %><br><br>
-        <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
+      <% end %>
     <% end %>
-  <% end %>  
-<%# end %> 
+  <% end %>   
+<% else %>
+
+  <%# cookies[:vote_poll_id] = @vote_poll.id %>
+  <% if cookies[:vote_poll_id] && cookies[:vote_poll_id] == @vote_poll.id.to_s %><br>
+    <span class="card-title"><h4>You have already upvoted !</h4></span>
+  <% else %>  
+    <% if @vote_option.present? %>
+      <%= form_for :answers, :url => answers_path  do |f| %>
+        <%= f.hidden_field :vote_poll_id, :value => @vote_poll.id %>
+        <% if current_user.present? %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+        <% end %>
+        <% @vote_option.each do |option| %>
+          <label class="radio-inline"><input type="radio" name="option_answer"  value= "<%= option.id %>"><%= option.title %></label>
+        <% end %><br><br>
+        <button type="submit">Submit</button>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>      
+
 
 
 <% @vote_option.each do |op|%> 
   <% op_count = op.answers.count %> 
-  <%= op.title %>:- <b><%= ((op_count*100)/@vote_option.count.to_f).round(2) %>%</b><br>
+  <%= op.title %>:- <b><%=  ((op_count*100)/@vote_option.count.to_f).round(2) %>%</b><br>
 <% end %>
+
+<%#= pie_chart @vote_poll.answers.group(:vote_option_id).count %>
+<%#= line_chart @vote_poll.answers.map { |goal|
+    {name: goal.title}
+} %>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          [
+            <% @vote_option.each do |op| 
+              op_count = op.answers.count
+              ((op_count*100)/@vote_option.count.to_f).round(2)
+            end %>
+          ]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+ <!-- <script>
+        $(function () {
+            var chart;
+            $(document).ready(function () {
+                chart = new Highcharts.Chart({
+                    chart:{
+                        renderTo:'container',
+                        type:'column'
+                    },
+                    title:{
+                        text:'<%= Date.today.strftime("%B")%> Overtime'
+                    },
+                    xAxis:{
+                        categories:[
+
+                            '<%= Date.today.strftime("%B")%>'
+
+                        ]
+                    },
+                    yAxis:{
+                        min:0,
+                        title:{
+                            text:'Hours'
+                        }
+                    },
+                    legend:{
+                        layout:'vertical',
+                        backgroundColor:'#FFFFFF',
+                        align:'left',
+                        verticalAlign:'top',
+                        x:100,
+                        y:70,
+                        floating:true,
+                        shadow:true
+                    },
+                    tooltip:{
+                        formatter:function () {
+                            return '' +
+                                    'Hours' + ': ' + this.y;
+                        },
+
+                        credits:{
+                            text:'SomeText.co.uk',
+                            hreft:'http://wwww.putyourlinkhere.co.uk'
+                        }
+                    },
+                    plotOptions:{
+                        pie:{
+                            pointPadding:0.4,
+                            borderWidth:0
+                        }
+                    },
+
+
+                    series:[
+                        <%# @vote_option.each do |op|%>
+                        {
+                            name:'<%#= op.title%>',
+                            data:[<%#=  ((op.answers.count*100)/@vote_option.count.to_f).round(2) %> ]
+                        },
+                        <%# end %>
+                    ]
+                });
+            });
+
+        });
+    </script>
+
+ -->

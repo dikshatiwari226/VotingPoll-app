@@ -67,4 +67,8 @@ gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem "nested_form"
 gem 'momentjs-rails'
+gem "chartkick"
+# gem 'fusioncharts-rails'
+
+# gem 'easy_as_pie'
 # gem 'bootstrap3-datetimepicker-rails'

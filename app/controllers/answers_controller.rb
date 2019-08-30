@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
 				redirect_to root_path
 			end
 		else
-			if cookies[:vote_poll_id] && cookies[:vote_poll_id] == params[:answers][:vote_poll_id]
+			if cookies[:vote_poll_id] && cookies[:vote_poll_id] == params[:answers][:vote_poll_id] 
 				return redirect_to root_path, notice: 'You have already voted'	
 			else
 				@answer = Answer.new(vote_poll_id: params[:answers][:vote_poll_id], vote_option_id: params[:option_answer])
@@ -18,5 +18,8 @@ class AnswersController < ApplicationController
 			redirect_to root_path
 			end
 		end
+				# @vote = params[:answers][:vote_poll_id]
+				# @vote_poll = VotePoll.find(@vote)
+				# @vote_poll = @vote_poll.update_attributes(is_voted: true) 
 	end
 end

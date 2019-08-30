@@ -5,7 +5,7 @@ class VootingDashboardController < ApplicationController
 		# @vooting_all = VotePoll.all.where("today >= startdate AND today <= enddate")
 
 
-		@vooting_all = VotePoll.all.where("startdate <= ? AND enddate >= ?", DateTime.now, DateTime.now )
+		@vooting_all = VotePoll.all.where("startdate <= ? AND enddate >= ?", Date.today, Date.today )
 	end
 
 	

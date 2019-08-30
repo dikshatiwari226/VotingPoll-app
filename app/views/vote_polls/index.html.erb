@@ -1,6 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="text-center">Vote Polls</h1>
+<h1 class="text-center">Vote Polls</h1><br>
+
+<%= form_tag "/admin/vote_polls", :method=>"get" do %>
+  <div class="col-md-11">
+    <%= text_field_tag :search, nil, :placeholder=>"search event", class: 'form-control' %>
+   </div> 
+   <div class="col-md-1"> 
+    <%= submit_tag "search" , class: 'btn btn-success'%>
+  </div> 
+<% end %><br><br>
+  
+  <h1>Categories</h1>
+    <%= select_tag "Select", options_from_collection_for_select( @category, "id", "category_name"), {:prompt=> "Select a category", :class=> "my_filter select_subcategory form-control"}%>
+
+  <script type="text/javascript">
+    $(function(){
+      $('select.my_filter').on('change', function(){
+        window.location = "/admin/vote_polls?category_id=" + $(this).val();
+      })
+    })
+  </script><br><br>
+
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
@@ -18,8 +39,8 @@
         <tr>
           <td><%= vote_poll.title %></td>
           <td><%= vote_poll.description %></td>
-          <td><%= vote_poll.startdate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
-          <td><%= vote_poll.enddate.strftime "%a, %-d %b %Y %I:%M %p" %></td>
+          <td><%= vote_poll.startdate.strftime "%a, %-d %b %Y " %></td>
+          <td><%= vote_poll.enddate.strftime "%a, %-d %b %Y " %></td>
           <td><%= link_to 'Show', admin_vote_poll_path(vote_poll), :class=> 'btn btn-info' %></td>
           <td><%= link_to 'Edit', edit_admin_vote_poll_path(vote_poll), :class=> 'btn btn-warning' %></td>
           <td><%= link_to 'Destroy',  admin_vote_poll_path(vote_poll), :class=> 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>

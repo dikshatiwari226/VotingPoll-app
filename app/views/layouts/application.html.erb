@@ -13,21 +13,21 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
           <% if user_signed_in? %>
-          <div class="navbar-text pull-right">
-            Logged in as <strong class="text-primary"><%= current_user.email %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
-            <%= link_to 'Edit Profile', edit_user_registration_path %> &nbsp;&nbsp;&nbsp;&nbsp;
-            <%= link_to 'Logout',   destroy_user_session_path %> 
-          </div>
+            <div class="navbar-text pull-right">
+              Logged in as <strong class="text-primary"><%= current_user.email %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+              <%= link_to 'Edit Profile', edit_user_registration_path %> &nbsp;&nbsp;&nbsp;&nbsp;
+              <%= link_to 'Logout',   destroy_user_session_path %> 
+            </div>
               <ul class="nav navbar-nav">
-                  <li class="active"><a href="/">Home</a></li>
+                  <li class=""><a href="/" >Home</a></li>
+                  <li class= "<%= params[:controller] == "vote_polls" && params[:action] == "index" ? 'active' : '' %>" ><a href="/admin/vote_polls">Polls</a></li>
                 <% if current_user.role == "admin" %>
-                  <li><a href="/admin/vote_polls/new">Poll Create</a></li>
+                  <li class= "<%= params[:controller] == "vote_polls" && params[:action] == "new" ? 'active' : '' %>"><a href="/admin/vote_polls/new">Polls Create</a></li>
+                  <li class= "<%= params[:controller] == "categories" && params[:action] == "new" ? 'active' : '' %>"><a href=" /categories/new" >Category</a></li>
                 <% end %>
-                <!-- <li><a href="/vote_polls">Poll Create</a></li> -->
-                <!-- <li><a href=" /categories/new">Category</a></li> -->
-                <!-- <li><a href=" /meetings">Meetings</a></li> -->
               </ul>
           <%  else  %>
+            <%= link_to "Home",  admin_vote_polls_path, :class=>'navbar-link' %> |
             <%= link_to "Sign up", new_user_registration_path, :class=>'navbar-link' %> |
             <%= link_to "Login", new_user_session_path, :class=>'navbar-link' %>
           <%  end %>
@@ -37,3 +37,9 @@
     <%= yield %>
   </body>
 </html>
+
+<style type="text/css">
+  .navbar-brand{
+    color: red !important!;
+  }
+</style>

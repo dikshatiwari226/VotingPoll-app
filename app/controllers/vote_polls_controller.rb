@@ -4,13 +4,19 @@ class VotePollsController < ApplicationController
   # GET /vote_polls
   # GET /vote_polls.json
   def index
-    @vote_polls = VotePoll.all
+    if params[:search].present?
+      @vote_polls = VotePoll.where("lower(title) LIKE :prefix OR lower(title) LIKE :prefix", prefix: "%#{params[:search].downcase}%")
+    elsif params[:category_id].present?
+      @vote_polls = VotePoll.where(category_id: params[:category_id])
+    else
+      @vote_polls = VotePoll.all
+    end  
+    @category = Category.all
   end
 
   # GET /vote_polls/1
   # GET /vote_polls/1.json
   def show
-
   end
 
   # GET /vote_polls/new
@@ -29,7 +35,7 @@ class VotePollsController < ApplicationController
 
     respond_to do |format|
       if @vote_poll.save
-        format.html { redirect_to define_admin_routes({resourceName: 'VotePoll', objectId: @vote_poll.id}), notice: 'PollVote was successfully created.' }
+        format.js 
         # format.html { redirect_to @vote_poll, notice: 'Vote poll was successfully created.' }
         format.json { render :show, status: :created, location: @vote_poll }
       else
@@ -44,13 +50,14 @@ class VotePollsController < ApplicationController
   def update
     respond_to do |format|
       if @vote_poll.update(vote_poll_params)
-        format.html { redirect_to define_admin_routes({resourceName: 'VotePoll', objectId: @vote_poll.id}), notice: 'PollVote was successfully created.' }
+        format.html { redirect_to define_admin_routes({resourceName: 'VotePoll', objectId: @vote_poll.id}), notice: 'PollVote was successfully updated.' }
         # format.html { redirect_to @vote_poll, notice: 'Vote poll was successfully updated.' }
         format.json { render :show, status: :ok, location: @vote_poll }
       else
         format.html { render :edit }
         format.json { render json: @vote_poll.errors, status: :unprocessable_entity }
       end
+
     end
   end
 
@@ -73,7 +80,7 @@ class VotePollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def vote_poll_params
-      params.require(:vote_poll).permit(:title, :description, :startdate, :enddate, vote_options_attributes: [:id, :title, :vote_poll_id, :_destroy])
+      params.require(:vote_poll).permit(:title, :description, :startdate, :enddate, :category_id, vote_options_attributes: [:id, :title, :vote_poll_id, :_destroy])
     end
 end
 

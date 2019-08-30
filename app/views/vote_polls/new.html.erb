@@ -1,6 +1,9 @@
 <h1 class="text-center">New Vote Poll</h1>
 
-<%= render 'form', vote_poll: @vote_poll %>
+<div id= "from_show">
+	<%= render 'form', vote_poll: @vote_poll %>
+</div>
 
-<%= link_to 'Back', admin_vote_polls_path,  class: 'btn btn-info', style: 'height:20%;width:10%';  %>
+
+<%#= link_to 'Back', admin_vote_polls_path,  class: 'btn btn-info', style: 'height:20%;width:10%';  %>
 

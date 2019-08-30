@@ -1,4 +1,4 @@
-<%= nested_form_for([:admin, @vote_poll]) do |form| %>
+<%= nested_form_for([:admin, @vote_poll], :remote => true) do |form| %>
   <% if vote_poll.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(vote_poll.errors.count, "error") %> prohibited this vote_poll from being saved:</h2>
@@ -39,7 +39,14 @@
   <div class="field col-lg-12">
     <%= form.label :enddate %>
     <%= form.text_field :enddate, :class=>'form-control datetimepicker1', :id=>'end_date', autocomplete: :off, :required=> true %>
-  </div><br>
+  </div>
+
+   <div class="field col-lg-12">
+    <%= form.label :Category%>
+    <%= form.collection_select :category_id, Category.all, :id, 
+      :category_name, {:prompt=> "Select a category"}, class: 'form-control', :required=> true  %>
+  </div>
+  <br>
   <p class="text-center"><%= form.link_to_add "Add a Answer", :vote_options, :data => { :target => "#tasks" }, class: "btn btn-primary" %></p>
    
   <table id="tasks">
@@ -56,7 +63,7 @@
   </div>
 <% end %>
 
-
+<!-- DateTime Picker gem script  -->
 <!-- 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -78,6 +85,7 @@
   });
 </script>
  -->
+
 <!-- Start_Date & End_Date Validation  -->
 
 <script type="text/javascript">
@@ -110,7 +118,7 @@
   });
 </script>
 
-
+<!-- Style -->
 
 <style type="text/css">
   .mynewinput1 {
