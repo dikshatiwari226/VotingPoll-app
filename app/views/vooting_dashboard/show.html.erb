@@ -61,7 +61,7 @@
   <% end %>
 <% end %>      
 
-
+<!-- Percentage Details -->
 
 <% @vote_option.each do |op|%> 
   <% op_count = op.answers.count %> 
@@ -74,7 +74,7 @@
 } %>
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -83,7 +83,7 @@
 
         var data = google.visualization.arrayToDataTable([
           [
-            <% @vote_option.each do |op| 
+            <#% @vote_option.each do |op| 
               op_count = op.answers.count
               ((op_count*100)/@vote_option.count.to_f).round(2)
             end %>
@@ -99,7 +99,7 @@
         chart.draw(data, options);
       }
     </script>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <div id="piechart" style="width: 900px; height: 500px;"></div> -->
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -107,7 +107,7 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 
- <!-- <script>
+ <script>
         $(function () {
             var chart;
             $(document).ready(function () {
@@ -117,7 +117,7 @@
                         type:'column'
                     },
                     title:{
-                        text:'<%= Date.today.strftime("%B")%> Overtime'
+                        text:'<%= Date.today.strftime("%B")%>'
                     },
                     xAxis:{
                         categories:[
@@ -145,7 +145,7 @@
                     tooltip:{
                         formatter:function () {
                             return '' +
-                                    'Hours' + ': ' + this.y;
+                                    'Percentage' + ': ' + this.y;
                         },
 
                         credits:{
@@ -154,7 +154,7 @@
                         }
                     },
                     plotOptions:{
-                        pie:{
+                        column:{
                             pointPadding:0.4,
                             borderWidth:0
                         }
@@ -162,12 +162,12 @@
 
 
                     series:[
-                        <%# @vote_option.each do |op|%>
+                        <% @vote_option.each do |option|%>
                         {
-                            name:'<%#= op.title%>',
-                            data:[<%#=  ((op.answers.count*100)/@vote_option.count.to_f).round(2) %> ]
+                            name:'<%= option.title%>',
+                            data:[<%=  ((option.answers.count*100)/@vote_option.count.to_f).round(2) %> ]
                         },
-                        <%# end %>
+                        <% end %>
                     ]
                 });
             });
@@ -175,4 +175,5 @@
         });
     </script>
 
- -->
+
+<div id="container"> </div>
