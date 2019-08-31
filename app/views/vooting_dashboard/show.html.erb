@@ -165,7 +165,7 @@
                         <% @vote_option.each do |option|%>
                         {
                             name:'<%= option.title%>',
-                            data:[<%=  ((option.answers.count*100)/@vote_option.count.to_f).round(2) %> ]
+                            data:[<%= ((option.answers.count*100)/@vote_poll.answers.count.to_f).round(2) %> ]
                         },
                         <% end %>
                     ]
