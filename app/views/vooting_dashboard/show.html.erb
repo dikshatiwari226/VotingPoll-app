@@ -22,7 +22,7 @@
 </p>
 
 <!-- Voting Answer form  -->
-
+<%# byebug %>
 <% if user_signed_in? %>
   <% if Answer.where(user_id: current_user.id, vote_poll_id: @vote_poll.id).first.present?  %><br>
     <span class="card-title"><h4>You have already upvoted !</h4></span>
@@ -62,10 +62,10 @@
 <% end %>      
 
 <!-- Percentage Details -->
-
+<%# byebug %>
 <% @vote_option.each do |op|%> 
   <% op_count = op.answers.count %> 
-  <%= op.title %>:- <b><%=  ((op_count*100)/@vote_option.count.to_f).round(2) %>%</b><br>
+  <%= op.title %>:- <b><%=  ((op_count*100)/@vote_poll.answers.count.to_f).round(2) %>%</b><br>
 <% end %>
 
 <%#= pie_chart @vote_poll.answers.group(:vote_option_id).count %>
